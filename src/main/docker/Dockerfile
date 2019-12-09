@@ -1,6 +1,6 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM java:8
 VOLUME /tmp
 ADD jenkins-0.0.1-SNAPSHOT.jar jenkins.jar
 RUN sh -c 'touch /jenkins.jar'
-ENV JAVA_OPTS=""
+EXPOSE 9100
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/jenkins.jar"]

@@ -8,6 +8,13 @@ set -x
 mvn jar:jar install:install help:evaluate -Dexpression=project.name
 set +x
 
+
+echo 'The following command runs and outputs the execution of your Java'
+echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
+set -x
+java -jar /home/ubuntu/work/jenkins-0.0.1-SNAPSHOT.jar
+set +x
+
 echo 'The following complex command extracts the value of the <name/> element'
 echo 'within <project/> of your Java/Maven project''s "pom.xml" file.'
 set -x
@@ -23,4 +30,4 @@ set +x
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
-java -jar target/${NAME}-${VERSION}.jar
+java -jar /home/ubuntu/work/${NAME}-${VERSION}.jar
