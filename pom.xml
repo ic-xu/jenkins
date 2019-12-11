@@ -12,7 +12,14 @@
     <artifactId>jenkins</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>jenkins</name>
+    <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
+
+    <modules>
+        <module>demo-common</module>
+        <module>demo01</module>
+        <module>demo02</module>
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>
@@ -50,50 +57,51 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <imageName>${docker.registry.url}/${docker.image.prefix}/${project.artifactId}</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
-                    <dockerDirectory>src/main/docker</dockerDirectory>
-                    <!-- 上传镜像 -->
-                    <pushImage>true</pushImage>
-                    <!-- 重试次数 -->
-                    <retryPushCount>3</retryPushCount>
+            <!--            <plugin>-->
+            <!--                <groupId>com.spotify</groupId>-->
+            <!--                <artifactId>docker-maven-plugin</artifactId>-->
+            <!--                <version>1.0.0</version>-->
+            <!--                <configuration>-->
+            <!--                    <imageName>${docker.registry.url}/${docker.image.prefix}/${project.artifactId}</imageName>-->
+            <!--                    <imageTags>-->
+            <!--                        <imageTag>${project.version}</imageTag>-->
+            <!--                    </imageTags>-->
+            <!--                    <dockerDirectory>src/main/docker</dockerDirectory>-->
+            <!--                    &lt;!&ndash; 上传镜像 &ndash;&gt;-->
+            <!--                    <pushImage>true</pushImage>-->
+            <!--                    &lt;!&ndash; 重试次数 &ndash;&gt;-->
+            <!--                    <retryPushCount>3</retryPushCount>-->
 
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <serverId>docker-registry</serverId>
-                </configuration>
-            </plugin>
+            <!--                    <resources>-->
+            <!--                        <resource>-->
+            <!--                            <targetPath>/</targetPath>-->
+            <!--                            <directory>${project.build.directory}</directory>-->
+            <!--                            <include>${project.build.finalName}.jar</include>-->
+            <!--                        </resource>-->
+            <!--                    </resources>-->
+            <!--                    <serverId>docker-registry</serverId>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
 
-            <!--复制jar包到指定目录-->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>gen-webadmin</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <tasks>
-                                <copy todir="src/main/docker" file="target/${project.artifactId}-${project.version}.${project.packaging}" />
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--            &lt;!&ndash;复制jar包到指定目录&ndash;&gt;-->
+            <!--            <plugin>-->
+            <!--                <artifactId>maven-antrun-plugin</artifactId>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>gen-webadmin</id>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <configuration>-->
+            <!--                            <tasks>-->
+            <!--                                &lt;!&ndash;src/main/docker&ndash;&gt;-->
+            <!--                                <copy todir="${user.home}/work" file="target/${project.artifactId}-${project.version}.${project.packaging}" />-->
+            <!--                            </tasks>-->
+            <!--                        </configuration>-->
+            <!--                        <goals>-->
+            <!--                            <goal>run</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 
