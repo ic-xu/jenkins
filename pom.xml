@@ -17,6 +17,11 @@
     <properties>
         <java.version>1.8</java.version>
         <docker.image.prefix>chenxu</docker.image.prefix>
+        <!-- 是镜像的前缀 -->
+        <docker.registry.name>devops_test</docker.registry.name>
+        <!-- docker私有仓库地址 -->
+        <docker.registry.url>192.168.42.133:5000</docker.registry.url>
+        <!-- docker编译地址 -->
     </properties>
 
     <dependencies>
@@ -50,8 +55,16 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <imageName>${docker.registry.url}/${docker.image.prefix}/${project.artifactId}</imageName>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>
                     <dockerDirectory>src/main/docker</dockerDirectory>
+                    <!-- 上传镜像 -->
+                    <pushImage>true</pushImage>
+                    <!-- 重试次数 -->
+                    <retryPushCount>3</retryPushCount>
+
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -59,6 +72,7 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <serverId>docker-registry</serverId>
                 </configuration>
             </plugin>
 
@@ -82,5 +96,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
