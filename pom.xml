@@ -19,6 +19,7 @@
         <module>demo-common</module>
         <module>demo01</module>
         <module>demo02</module>
+        <module>eureka</module>
     </modules>
 
     <properties>
